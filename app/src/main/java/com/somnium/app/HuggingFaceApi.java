@@ -9,3 +9,4 @@ public interface HuggingFaceApi {
     @POST("https://api-inference.huggingface.co/models/your-model-name")
     Call<HuggingFaceResponse> analyzeDream(@Body String input);
 }
+//gpt 2
