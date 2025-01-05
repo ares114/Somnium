@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Somnium</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="forgot_password_text">Forgot password?</string>
+    <string name="login_button_text">Log In</string>
+    <string name="or_text">or</string>
+    <string name="google_content_desc">Continue with Google</string>
+    <string name="facebook_content_desc">Continue with Facebook</string>
+    <string name="create_account_text">Create an account</string>
+    <string name="fullname_hint">Full Name</string>
+    <string name="signup_button_text">Sign Up</string>
+    <string name="already_have_account">Already have an account? Log In</string>
+    <string name="hugging_face_api_key">YOUR_HUGGING_FACE_API_KEY</string>
+</resources>
