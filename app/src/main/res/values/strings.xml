@@ -13,5 +13,4 @@
     <string name="fullname_hint">Full Name</string>
     <string name="signup_button_text">Sign Up</string>
     <string name="already_have_account">Already have an account? Log In</string>
-    <string name="hugging_face_api_key">YOUR_HUGGING_FACE_API_KEY</string>
 </resources>

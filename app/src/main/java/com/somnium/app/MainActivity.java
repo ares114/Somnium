@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
             startActivity(intent);
         });
+
     }
 
     private void loginUser(String email, String password) {

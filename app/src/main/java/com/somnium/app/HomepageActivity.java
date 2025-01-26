@@ -7,13 +7,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class HomepageActivity extends AppCompatActivity {
+
+    private static final String API_URL = "https://api-inference.huggingface.co/models/openai-community/gpt2-large";
+    private static final String API_KEY = "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";
 
     private EditText dreamInput;
     private Button analyzeButton;
@@ -22,56 +26,76 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);  // Ensure this file exists
+        setContentView(R.layout.activity_homepage);
 
-        // Initializing UI components
         dreamInput = findViewById(R.id.dream_input);
         analyzeButton = findViewById(R.id.analyze_button);
         resultText = findViewById(R.id.result_text);
 
-        // Set click listener for the analyze button
-        analyzeButton.setOnClickListener(v -> {
-            String dreamText = dreamInput.getText().toString();
-
-            if (dreamText.isEmpty()) {
-                Toast.makeText(HomepageActivity.this, "Please enter your dream", Toast.LENGTH_SHORT).show();
-            } else {
-                // Call the Hugging Face API for dream analysis
-                analyzeDream(dreamText);
+        analyzeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String dreamText = dreamInput.getText().toString().trim();
+                if (dreamText.isEmpty()) {
+                    Toast.makeText(HomepageActivity.this, "Please enter a dream to analyze!", Toast.LENGTH_SHORT).show();
+                } else {
+                    analyzeDream(dreamText);
+                }
             }
         });
     }
 
-    // Method to send the dream text to Hugging Face API and get the result
     private void analyzeDream(String dreamText) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api-inference.huggingface.co/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        new Thread(() -> {
+            try {
+                String payload = "{ \"inputs\": \"Dream interpretation: " + dreamText + "\" }";
+                URL url = new URL(API_URL);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setDoOutput(true);
 
-        // Replace "your-model-name" with the model name you want to use from Hugging Face
-        HuggingFaceApi api = retrofit.create(HuggingFaceApi.class);
+                OutputStream os = connection.getOutputStream();
+                os.write(payload.getBytes());
+                os.flush();
+                os.close();
 
-        // Make the API call
-        Call<HuggingFaceResponse> call = api.analyzeDream(dreamText);
-        call.enqueue(new Callback<HuggingFaceResponse>() {
-            @Override
-            public void onResponse(Call<HuggingFaceResponse> call, Response<HuggingFaceResponse> response) {
-                if (response.isSuccessful()) {
-                    HuggingFaceResponse hugResponse = response.body();
-                    if (hugResponse != null) {
-                        // Display the result in the TextView
-                        resultText.setText(hugResponse.getGeneratedText());
-                    }
-                } else {
-                    Toast.makeText(HomepageActivity.this, "Error: " + response.message(), Toast.LENGTH_SHORT).show();
+                Scanner scanner = new Scanner(connection.getInputStream());
+                StringBuilder response = new StringBuilder();
+                while (scanner.hasNext()) {
+                    response.append(scanner.nextLine());
                 }
-            }
+                scanner.close();
 
-            @Override
-            public void onFailure(Call<HuggingFaceResponse> call, Throwable t) {
-                Toast.makeText(HomepageActivity.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                String formattedResponse = formatResponse(response.toString());
+                runOnUiThread(() -> resultText.setText(formattedResponse));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> {
+                    Toast.makeText(HomepageActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    resultText.setText("Failed to analyze dream.");
+                });
             }
-        });
+        }).start();
+    }
+
+    private String formatResponse(String response) {
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            JSONObject firstObject = jsonArray.getJSONObject(0);
+            String generatedText = firstObject.getString("generated_text");
+
+            String[] points = generatedText.split("\\. ");
+            StringBuilder formatted = new StringBuilder();
+            for (int i = 0; i < Math.min(points.length, 5); i++) { // Limit to 5 points
+                formatted.append((i + 1)).append(". ").append(points[i].trim()).append("\n");
+            }
+            return formatted.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Failed to interpret the response.";
+        }
     }
 }
