@@ -1,4 +1,29 @@
 <resources>
+    <!-- Text Input Style -->
+    <style name="SomniumTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="materialThemeOverlay">@style/SomniumTextInputEditTextOverlay</item>
+    </style>
+
+    <!-- Text Input EditText Overlay -->
+    <style name="SomniumTextInputEditTextOverlay" parent="">
+        <item name="editTextStyle">@style/SomniumEditText</item>
+    </style>
+
+    <!-- EditText Style -->
+    <style name="SomniumEditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <!-- Rounded Corners (for CardView) -->
     <style name="RoundedCorners">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>

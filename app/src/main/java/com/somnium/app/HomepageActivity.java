@@ -1,101 +1,121 @@
 package com.somnium.app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomepageActivity extends AppCompatActivity {
 
-    private static final String API_URL = "https://api-inference.huggingface.co/models/openai-community/gpt2-large";
-    private static final String API_KEY = "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";
-
+    private BottomNavigationView bottomNav;
     private EditText dreamInput;
+    private TextView analysisResult;
     private Button analyzeButton;
-    private TextView resultText;
+    private final String API_KEY = "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"; // Replace with your OpenRouter API key
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
+        // Initialize UI components
         dreamInput = findViewById(R.id.dream_input);
+        analysisResult = findViewById(R.id.analysis_result);
         analyzeButton = findViewById(R.id.analyze_button);
-        resultText = findViewById(R.id.result_text);
+        bottomNav = findViewById(R.id.bottom_nav);
 
-        analyzeButton.setOnClickListener(new View.OnClickListener() {
+        // Set up Analyze button click listener
+        analyzeButton.setOnClickListener(v -> analyzeDream());
+
+        // Set up bottom navigation
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                String dreamText = dreamInput.getText().toString().trim();
-                if (dreamText.isEmpty()) {
-                    Toast.makeText(HomepageActivity.this, "Please enter a dream to analyze!", Toast.LENGTH_SHORT).show();
-                } else {
-                    analyzeDream(dreamText);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.nav_home) {
+                    // Already on home
+                    return true;
+                } else if (itemId == R.id.nav_add) {
+                    startActivity(new Intent(HomepageActivity.this, AddDreamActivity.class));
+                    return true;
+                } else if (itemId == R.id.nav_analysis) {
+                    startActivity(new Intent(HomepageActivity.this, AnalysisActivity.class));
+                    return true;
+                } else if (itemId == R.id.nav_profile) {
+                    startActivity(new Intent(HomepageActivity.this, ProfileActivity.class));
+                    return true;
                 }
+                return false;
             }
         });
     }
 
-    private void analyzeDream(String dreamText) {
-        new Thread(() -> {
-            try {
-                String payload = "{ \"inputs\": \"Dream interpretation: " + dreamText + "\" }";
-                URL url = new URL(API_URL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setDoOutput(true);
+    private void analyzeDream() {
+        String dreamText = dreamInput.getText().toString().trim();
+        if (dreamText.isEmpty()) {
+            Toast.makeText(this, "Please enter your dream first", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                OutputStream os = connection.getOutputStream();
-                os.write(payload.getBytes());
-                os.flush();
-                os.close();
+        // Show loading state
+        analysisResult.setText("Analyzing your dream...");
+        analyzeButton.setEnabled(false);
 
-                Scanner scanner = new Scanner(connection.getInputStream());
-                StringBuilder response = new StringBuilder();
-                while (scanner.hasNext()) {
-                    response.append(scanner.nextLine());
+        // Create API request
+        ApiRequest.Message message = new ApiRequest.Message(
+                "user",
+                "Analyze this dream in detail and provide interpretation: " + dreamText
+        );
+        List<ApiRequest.Message> messages = new ArrayList<>();
+        messages.add(message);
+
+        ApiRequest request = new ApiRequest();
+        request.setMessages(messages);
+
+        // Make API call
+        ApiService service = ApiClient.getClient(API_KEY).create(ApiService.class);
+        service.getCompletion(request).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                analyzeButton.setEnabled(true);
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String result = response.body().getChoices().get(0).getMessage().getContent();
+                        runOnUiThread(() -> analysisResult.setText(result));
+                    } catch (Exception e) {
+                        showError("Failed to parse response");
+                    }
+                } else {
+                    showError("API Error: " + response.message());
                 }
-                scanner.close();
-
-                String formattedResponse = formatResponse(response.toString());
-                runOnUiThread(() -> resultText.setText(formattedResponse));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                runOnUiThread(() -> {
-                    Toast.makeText(HomepageActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    resultText.setText("Failed to analyze dream.");
-                });
             }
-        }).start();
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                analyzeButton.setEnabled(true);
+                showError("Network Error: " + t.getMessage());
+            }
+        });
     }
 
-    private String formatResponse(String response) {
-        try {
-            JSONArray jsonArray = new JSONArray(response);
-            JSONObject firstObject = jsonArray.getJSONObject(0);
-            String generatedText = firstObject.getString("generated_text");
-
-            String[] points = generatedText.split("\\. ");
-            StringBuilder formatted = new StringBuilder();
-            for (int i = 0; i < Math.min(points.length, 5); i++) { // Limit to 5 points
-                formatted.append((i + 1)).append(". ").append(points[i].trim()).append("\n");
-            }
-            return formatted.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Failed to interpret the response.";
-        }
+    private void showError(String message) {
+        runOnUiThread(() -> {
+            analysisResult.setText(message);
+            Toast.makeText(HomepageActivity.this, message, Toast.LENGTH_SHORT).show();
+        });
     }
 }

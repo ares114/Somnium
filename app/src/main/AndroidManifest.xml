@@ -2,6 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.somnium.app">
 
+    <!-- Permissions MUST be here, before application tag -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +16,7 @@
         android:theme="@style/Theme.Somnium"
         tools:targetApi="31">
 
+        <!-- Activities remain here -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -22,19 +26,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+        <!-- Other activities... -->
 
-        <activity
-            android:name=".RegistrationActivity"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".HomepageActivity"
-            android:exported="true">
-        </activity>
     </application>
-
 </manifest>
