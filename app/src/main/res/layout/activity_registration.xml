@@ -8,6 +8,7 @@
     android:background="@drawable/auth_page_background_gradient"
     tools:context=".RegistrationActivity">
 
+
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
