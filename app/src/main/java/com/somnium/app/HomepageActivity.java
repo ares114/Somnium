@@ -25,7 +25,7 @@ public class HomepageActivity extends AppCompatActivity {
     private EditText dreamInput;
     private TextView analysisResult;
     private Button analyzeButton;
-    private final String API_KEY = "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"; // Replace with your OpenRouter API key
+    private final String API_KEY = "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";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,6 @@ public class HomepageActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.nav_home) {
-                    // Already on home
                     return true;
                 } else if (itemId == R.id.nav_add) {
                     startActivity(new Intent(HomepageActivity.this, AddDreamActivity.class));
