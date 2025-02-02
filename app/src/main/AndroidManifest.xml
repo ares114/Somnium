@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.somnium.app">
 
-    <!-- Permissions MUST be here, before application tag -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +15,7 @@
         android:theme="@style/Theme.Somnium"
         tools:targetApi="31">
 
-        <!-- Activities remain here -->
+        <!-- Splash Screen Activity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -26,7 +25,13 @@
             </intent-filter>
         </activity>
 
-        <!-- Other activities... -->
+        <activity android:name=".HomepageActivity" android:exported="true" />
+
+        <activity android:name=".MainActivity" android:exported="true" />
+        <activity android:name=".RegistrationActivity" android:exported="true" />
+        <activity android:name=".AddDreamActivity" android:exported="true" />
+        <activity android:name=".AnalysisActivity" android:exported="true" />
+        <activity android:name=".ProfileActivity" android:exported="true" />
 
     </application>
 </manifest>

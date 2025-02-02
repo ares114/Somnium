@@ -18,29 +18,28 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class HomepageActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
     private EditText dreamInput;
     private TextView analysisResult;
     private Button analyzeButton;
-    private final String API_KEY = "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"; // Replace with your OpenRouter API key
+    private final String API_KEY = "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"; // Replace with your OpenRouter API key
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        // Initialize UI components
         dreamInput = findViewById(R.id.dream_input);
         analysisResult = findViewById(R.id.analysis_result);
         analyzeButton = findViewById(R.id.analyze_button);
         bottomNav = findViewById(R.id.bottom_nav);
 
-        // Set up Analyze button click listener
         analyzeButton.setOnClickListener(v -> analyzeDream());
 
-        // Set up bottom navigation
+
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -71,11 +70,9 @@ public class HomepageActivity extends AppCompatActivity {
             return;
         }
 
-        // Show loading state
         analysisResult.setText("Analyzing your dream...");
         analyzeButton.setEnabled(false);
 
-        // Create API request
         ApiRequest.Message message = new ApiRequest.Message(
                 "user",
                 "Analyze this dream in detail and provide interpretation: " + dreamText
@@ -86,7 +83,6 @@ public class HomepageActivity extends AppCompatActivity {
         ApiRequest request = new ApiRequest();
         request.setMessages(messages);
 
-        // Make API call
         ApiService service = ApiClient.getClient(API_KEY).create(ApiService.class);
         service.getCompletion(request).enqueue(new Callback<ApiResponse>() {
             @Override

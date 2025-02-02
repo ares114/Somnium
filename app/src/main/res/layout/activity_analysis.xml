@@ -9,7 +9,6 @@
     android:background="@drawable/auth_page_background_gradient"
     tools:context=".HomepageActivity">
 
-    <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"

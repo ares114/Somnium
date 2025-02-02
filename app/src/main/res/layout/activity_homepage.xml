@@ -9,7 +9,6 @@
     android:background="@drawable/auth_page_background_gradient"
     tools:context=".HomepageActivity">
 
-    <!-- Dream Input Field -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dream_input_layout"
         style="@style/SomniumTextInputLayout"
@@ -31,7 +30,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Analyze Button -->
     <Button
         android:id="@+id/analyze_button"
         android:layout_width="0dp"
@@ -47,7 +45,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Analysis Result Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/result_card"
         android:layout_width="0dp"
@@ -74,7 +71,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
