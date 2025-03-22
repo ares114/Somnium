@@ -13,4 +13,9 @@
     <string name="fullname_hint">Full Name</string>
     <string name="signup_button_text">Sign Up</string>
     <string name="already_have_account">Already have an account? Log In</string>
+    <string name="verify_email_title">Verify Your Email</string>
+    <string name="verify_email_description">Please enter the verification code sent to your email</string>
+    <string name="verification_code_hint">Enter verification code</string>
+    <string name="verify_button_text">Verify</string>
+    <string name="resend_code_text">Resend Code</string>
 </resources>

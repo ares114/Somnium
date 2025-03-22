@@ -49,6 +49,30 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
+        android:id="@+id/username_input"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="23dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/input_field_background"
+        android:hint="Username"
+        android:textColorHint="#A0A0A0"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_regular"
+        android:letterSpacing="0.05"
+        android:paddingStart="23dp"
+        android:paddingEnd="23dp"
+        android:inputType="text"
+        android:importantForAccessibility="yes"
+        android:autofillHints="username"
+        app:layout_constraintTop_toBottomOf="@+id/fullname_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
         android:id="@+id/email_input"
         android:layout_width="320dp"
         android:layout_height="50dp"
@@ -68,7 +92,7 @@
         android:inputType="textEmailAddress"
         android:importantForAccessibility="yes"
         android:autofillHints="emailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/fullname_input"
+        app:layout_constraintTop_toBottomOf="@+id/username_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

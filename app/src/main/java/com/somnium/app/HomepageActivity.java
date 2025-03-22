@@ -1,65 +1,41 @@
 package com.somnium.app;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.ProgressBar;
+import com.somnium.app.ai.DreamAnalyzer;
+import com.somnium.app.ai.DreamAnalysis;
 
-
-public class HomepageActivity extends AppCompatActivity {
-
-    private BottomNavigationView bottomNav;
+public class HomepageActivity extends BaseActivity {
     private EditText dreamInput;
     private TextView analysisResult;
     private Button analyzeButton;
-    private final String API_KEY = "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";
+    private ProgressBar progressBar;
+    private DreamAnalyzer dreamAnalyzer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
+        // Initialize views
         dreamInput = findViewById(R.id.dream_input);
         analysisResult = findViewById(R.id.analysis_result);
         analyzeButton = findViewById(R.id.analyze_button);
-        bottomNav = findViewById(R.id.bottom_nav);
+        progressBar = findViewById(R.id.progress_bar);
 
+        // Initialize dream analyzer
+        dreamAnalyzer = new DreamAnalyzer(this);
+
+        // Set up click listener
         analyzeButton.setOnClickListener(v -> analyzeDream());
 
-
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.nav_home) {
-                    return true;
-                } else if (itemId == R.id.nav_add) {
-                    startActivity(new Intent(HomepageActivity.this, AddDreamActivity.class));
-                    return true;
-                } else if (itemId == R.id.nav_analysis) {
-                    startActivity(new Intent(HomepageActivity.this, AnalysisActivity.class));
-                    return true;
-                } else if (itemId == R.id.nav_profile) {
-                    startActivity(new Intent(HomepageActivity.this, ProfileActivity.class));
-                    return true;
-                }
-                return false;
-            }
-        });
+        // Set up navigation
+        setupBottomNavigation();
     }
 
     private void analyzeDream() {
@@ -69,48 +45,36 @@ public class HomepageActivity extends AppCompatActivity {
             return;
         }
 
-        analysisResult.setText("Analyzing your dream...");
+        // Show loading state
+        progressBar.setVisibility(View.VISIBLE);
         analyzeButton.setEnabled(false);
+        analysisResult.setText("Analyzing your dream...");
 
-        ApiRequest.Message message = new ApiRequest.Message(
-                "user",
-                "Analyze this dream in detail and provide interpretation: " + dreamText
-        );
-        List<ApiRequest.Message> messages = new ArrayList<>();
-        messages.add(message);
-
-        ApiRequest request = new ApiRequest();
-        request.setMessages(messages);
-
-        ApiService service = ApiClient.getClient(API_KEY).create(ApiService.class);
-        service.getCompletion(request).enqueue(new Callback<ApiResponse>() {
+        // Analyze the dream
+        dreamAnalyzer.analyzeDream(dreamText, new DreamAnalyzer.AnalysisCallback() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                analyzeButton.setEnabled(true);
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String result = response.body().getChoices().get(0).getMessage().getContent();
-                        runOnUiThread(() -> analysisResult.setText(result));
-                    } catch (Exception e) {
-                        showError("Failed to parse response");
-                    }
-                } else {
-                    showError("API Error: " + response.message());
-                }
+            public void onSuccess(DreamAnalysis analysis) {
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
+                    analyzeButton.setEnabled(true);
+                    analysisResult.setText(analysis.getFullAnalysis());
+                });
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                analyzeButton.setEnabled(true);
-                showError("Network Error: " + t.getMessage());
+            public void onError(String error) {
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
+                    analyzeButton.setEnabled(true);
+                    Toast.makeText(HomepageActivity.this, error, Toast.LENGTH_LONG).show();
+                    analysisResult.setText("Failed to analyze dream. Please try again.");
+                });
             }
         });
     }
 
-    private void showError(String message) {
-        runOnUiThread(() -> {
-            analysisResult.setText(message);
-            Toast.makeText(HomepageActivity.this, message, Toast.LENGTH_SHORT).show();
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

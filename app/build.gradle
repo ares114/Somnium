@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.android' version '1.9.22'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.somnium.app"
-        minSdk 28
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -23,35 +24,71 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/DEPENDENCIES',
+                'META-INF/LICENSE',
+                'META-INF/LICENSE.txt',
+                'META-INF/license.txt',
+                'META-INF/NOTICE',
+                'META-INF/NOTICE.txt',
+                'META-INF/notice.txt',
+                'META-INF/ASL2.0',
+                'META-INF/*.kotlin_module',
+                'META-INF/LICENSE.md',
+                'META-INF/NOTICE.md',
+                'META-INF/*.md',
+                'META-INF/*.version',
+                'META-INF/versions/**',
+                'META-INF/proguard/**',
+                'META-INF/services/**',
+                'META-INF/*.properties',
+                'META-INF/mimetypes.default'
+            ]
+            pickFirsts += ['META-INF/LICENSE.md']
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
 }
 
 dependencies {
-    // Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:33.7.0')
-
-    // Firebase Authentication
+    implementation platform('com.google.firebase:firebase-bom:32.7.2')
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Firebase
     implementation 'com.google.firebase:firebase-auth'
-
-    // Retrofit dependencies
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    // Your other dependencies
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.activity
-    implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-firestore'
+    
+    // UI Components
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    
+    // Email dependencies
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    
+    // Google AI (Gemini)
+    implementation 'com.google.ai.client.generativeai:generativeai:0.1.1'
+    
+    // Gson for JSON handling
     implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    
+    // Kotlin dependencies
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

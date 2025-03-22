@@ -15,6 +15,10 @@
         android:theme="@style/Theme.Somnium"
         tools:targetApi="31">
 
+        <meta-data
+            android:name="com.google.ai.client.generativeai.API_KEY"
+            android:value="AIzaSyD4TopFkTm3h86gAqWWiMNjW4ttB5ogW5o" />
+
         <!-- Splash Screen Activity -->
         <activity
             android:name=".SplashActivity"
@@ -26,10 +30,11 @@
         </activity>
 
         <activity android:name=".HomepageActivity" android:exported="true" />
-
         <activity android:name=".MainActivity" android:exported="true" />
-        <activity android:name=".RegistrationActivity" android:exported="true" />
-        <activity android:name=".AddDreamActivity" android:exported="true" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".EmailVerificationActivity" />
+        <activity android:name=".AddDreamActivity" />
         <activity android:name=".AnalysisActivity" android:exported="true" />
         <activity android:name=".ProfileActivity" android:exported="true" />
 
