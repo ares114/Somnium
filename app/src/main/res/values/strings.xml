@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Somnium</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Username</string>
+    <string name="full_name">Full Name</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="no_account_prompt">Don\'t have an account?</string>
+    <string name="already_account">Already have an account?</string>
+    <string name="create_account">Create Account</string>
+    <string name="login_subtitle">Explore your dreams</string>
+    <string name="app_logo">App Logo</string>
+    <string name="email_verification_sent">Verification email has been sent</string>
+    <string name="verification_message">Please check your email to verify your account</string>
+    <string name="login_failed">Login failed</string>
+    <string name="signup_failed">Sign up failed</string>
+    <string name="passwords_not_match">Passwords do not match</string>
+    <string name="fields_required">All fields are required</string>
+    <string name="verification_required">Please verify your email before logging in</string>
+    <string name="check_email">Check Your Email</string>
+    <string name="verification_sent">We\'ve sent a verification link to your email address.</string>
+    <string name="verify_instructions">Please verify your email to complete registration.</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="email_required">Email is required</string>
+    <string name="reset_email_sent">Password reset email has been sent</string>
+    <string name="reset_email_failed">Failed to send reset email</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_instructions">Enter your email address to receive a password reset link</string>
+    
+    <!-- Navigation -->
+    <string name="home">Home</string>
+    <string name="journal">Journal</string>
+    <string name="stats">Statistics</string>
+    <string name="profile">Profile</string>
+    
+    <!-- Profile -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="logout">Logout</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="dreams_recorded">Dreams Recorded</string>
+    <string name="account_created">Account Created</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="change_photo">Change Photo</string>
+    
+    <!-- Dream Journal -->
+    <string name="record_your_dream">Record Your Dream</string>
+    <string name="dream_title">Dream Title</string>
+    <string name="dream_content">What happened in your dream?</string>
+    <string name="save_dream">Save Dream</string>
+    
+    <!-- Dream Analysis -->
+    <string name="analysis_already_saved">Analysis Saved</string>
+    <string name="generate_new_analysis">Generate New Analysis</string>
+</resources>

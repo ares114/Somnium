@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dreamListFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.somnium.app.fragments.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_dreamListFragment"
+            app:destination="@id/dreamListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.somnium.app.fragments.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_dreamListFragment"
+            app:destination="@id/dreamListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dreamListFragment"
+        android:name="com.somnium.app.fragments.DreamListFragment"
+        android:label="My Dreams"
+        tools:layout="@layout/fragment_dream_list">
+        <action
+            android:id="@+id/action_dreamListFragment_to_addDreamFragment"
+            app:destination="@id/addDreamFragment" />
+        <action
+            android:id="@+id/action_dreamListFragment_to_dreamDetailFragment"
+            app:destination="@id/dreamDetailFragment" />
+        <action
+            android:id="@+id/action_dreamListFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addDreamFragment"
+        android:name="com.somnium.app.fragments.AddDreamFragmentNew"
+        android:label="Add Dream"
+        tools:layout="@layout/fragment_add_dream" />
+
+    <fragment
+        android:id="@+id/dreamDetailFragment"
+        android:name="com.somnium.app.fragments.DreamDetailFragment"
+        android:label="Dream Detail"
+        tools:layout="@layout/fragment_dream_detail" />
+
+</navigation> 

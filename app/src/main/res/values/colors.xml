@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Dark Dreamy Color Palette -->
+    <color name="deep_space">#1A1A2E</color>
+    <color name="midnight_blue">#16213E</color>
+    <color name="dark_purple">#30175F</color>
+    <color name="cosmic_purple">#472D96</color>
+    <color name="nebula_blue">#2C3E68</color>
+    <color name="twilight_purple">#5C3C92</color>
+    <color name="cosmic_indigo">#3C0F6A</color>
+    <color name="stardust_violet">#9B72CF</color>
+    <color name="starlight_silver">#C1BED1</color>
+    <color name="moonlight_blue">#ACBAD1</color>
+    
+    <!-- App Theme Colors -->
+    <color name="primary">#472D96</color>
+    <color name="primary_dark">#1A1A2E</color>
+    <color name="primary_light">#5C3C92</color>
+    <color name="accent">#9B72CF</color>
+    
+    <!-- Text and Input Colors -->
+    <color name="text_light">#E0E0E0</color>
+    <color name="text_secondary">#C1BED1</color>
+    <color name="hint_text">#9090A0</color>
+    <color name="input_background">#2C3E68</color>
+</resources>

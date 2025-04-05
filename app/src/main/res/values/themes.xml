@@ -1,0 +1,48 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Somnium" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:colorBackground">@color/deep_space</item>
+        <item name="android:windowBackground">@color/deep_space</item>
+        <item name="colorSurface">@color/midnight_blue</item>
+        <item name="android:textColorPrimary">@color/text_light</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+        <item name="colorOnSurface">@color/text_light</item>
+    </style>
+
+    <style name="Theme.Somnium" parent="Base.Theme.Somnium">
+        <!-- You can customize your theme attributes here -->
+    </style>
+    
+    <!-- Theme with no action bar for splash screen -->
+    <style name="Theme.Somnium.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    
+    <!-- Button style -->
+    <style name="SomniumButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/cosmic_purple</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="cornerRadius">25dp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+    
+    <!-- TextField style -->
+    <style name="SomniumTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/stardust_violet</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="hintTextColor">@color/stardust_violet</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+        <item name="placeholderTextColor">@color/hint_text</item>
+        <item name="hintEnabled">true</item>
+        <item name="boxBackgroundColor">@color/nebula_blue</item>
+        <item name="endIconTint">@color/stardust_violet</item>
+        <item name="startIconTint">@color/stardust_violet</item>
+    </style>
+</resources>
