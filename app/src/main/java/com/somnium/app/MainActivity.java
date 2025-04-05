@@ -26,21 +26,17 @@ public class MainActivity extends BaseActivity implements NavigationBarView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         
-        // Initialize toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         
-        // Initialize bottom navigation
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(this);
         
-        // Set default fragment to Home
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }

@@ -38,16 +38,13 @@ public class StatisticsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        // Initialize views
         tvTotalDreams = view.findViewById(R.id.textViewTotalDreams);
         tvAnalyzedDreams = view.findViewById(R.id.textViewAnalyzedDreams);
         tvCommonThemes = view.findViewById(R.id.textViewCommonThemes);
         tvLongestStreak = view.findViewById(R.id.textViewLongestStreak);
         
-        // Initialize ViewModel
         viewModel = new ViewModelProvider(requireActivity()).get(DreamViewModel.class);
         
-        // Load user data
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             loadUserStatistics(user.getUid());
@@ -65,11 +62,9 @@ public class StatisticsFragment extends Fragment {
     }
     
     private void updateStatistics(List<Dream> dreams) {
-        // Total dreams
         int totalDreams = dreams.size();
         tvTotalDreams.setText(String.valueOf(totalDreams));
         
-        // Analyzed dreams
         int analyzedDreams = 0;
         for (Dream dream : dreams) {
             if (dream.hasAnalysis()) {
@@ -78,12 +73,11 @@ public class StatisticsFragment extends Fragment {
         }
         tvAnalyzedDreams.setText(String.valueOf(analyzedDreams));
         
-        // Common themes (simple keyword analysis)
         Map<String, Integer> themes = analyzeCommonThemes(dreams);
         StringBuilder themesText = new StringBuilder();
         int count = 0;
         for (Map.Entry<String, Integer> entry : themes.entrySet()) {
-            if (count++ < 3) { // Show top 3 themes
+            if (count++ < 3) {
                 themesText.append(entry.getKey()).append(" (").append(entry.getValue()).append(")\n");
             } else {
                 break;
@@ -91,7 +85,6 @@ public class StatisticsFragment extends Fragment {
         }
         tvCommonThemes.setText(themesText.toString().trim());
         
-        // Longest streak (simplified calculation)
         tvLongestStreak.setText(calculateLongestStreak(dreams) + " days");
     }
     
@@ -112,7 +105,6 @@ public class StatisticsFragment extends Fragment {
     }
     
     private int calculateLongestStreak(List<Dream> dreams) {
-        // This is a simplified version - a more accurate one would parse dates and track consecutive days
-        return Math.min(dreams.size(), 7); // Placeholder calculation
+        return Math.min(dreams.size(), 7);
     }
 } 

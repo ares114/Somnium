@@ -21,7 +21,6 @@
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Total Dreams Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardTotalDreams"
             android:layout_width="0dp"
@@ -57,7 +56,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Analyzed Dreams Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAnalyzedDreams"
             android:layout_width="0dp"
@@ -93,7 +91,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Common Themes Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardCommonThemes"
             android:layout_width="match_parent"
@@ -126,7 +123,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Longest Streak Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardLongestStreak"
             android:layout_width="match_parent"
