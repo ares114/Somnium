@@ -33,6 +33,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.Activity;
+
 public class AddDreamFragmentNew extends Fragment {
 
     private static final String TAG = "AddDreamFragmentNew";
@@ -75,7 +77,7 @@ public class AddDreamFragmentNew extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         datePicker = view.findViewById(R.id.datePicker);
         fabVoice = view.findViewById(R.id.fabVoice);
-
+        
         // Initialize ViewModel - use the fragment's viewmodel for better lifecycle management
         viewModel = new ViewModelProvider(this).get(DreamViewModel.class);
 
@@ -94,6 +96,9 @@ public class AddDreamFragmentNew extends Fragment {
         
         // Setup voice input button
         fabVoice.setOnClickListener(v -> startVoiceInput());
+        
+        // Limit the date picker to today's date (no future dates)
+        limitDatePickerToCurrentDate();
     }
     
     private void startVoiceInput() {
@@ -114,7 +119,7 @@ public class AddDreamFragmentNew extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         
-        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == getActivity().RESULT_OK && data != null) {
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK && data != null) {
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             if (result != null && !result.isEmpty()) {
                 // Get the current content and append the new content
@@ -244,6 +249,19 @@ public class AddDreamFragmentNew extends Fragment {
         
         // Set focus back to title field
         editTextTitle.requestFocus();
+    }
+    
+    // Add a new method to limit the date picker
+    private void limitDatePickerToCurrentDate() {
+        Calendar today = Calendar.getInstance();
+        
+        // Set the max date to today (no future dates allowed)
+        datePicker.setMaxDate(today.getTimeInMillis());
+        
+        // Optional: Set minimum date to something reasonable like 100 years ago
+        Calendar minDate = Calendar.getInstance();
+        minDate.add(Calendar.YEAR, -100);
+        datePicker.setMinDate(minDate.getTimeInMillis());
     }
     
     @Override

@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Core colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- Dark Dreamy Color Palette -->
-    <color name="deep_space">#1A1A2E</color>
-    <color name="midnight_blue">#16213E</color>
-    <color name="dark_purple">#30175F</color>
-    <color name="cosmic_purple">#472D96</color>
-    <color name="nebula_blue">#2C3E68</color>
+    <!-- Primary color palette - Dreamy indigo -->
+    <color name="primary">#5E35B1</color>
+    <color name="primary_dark">#4527A0</color>
+    <color name="primary_light">#B39DDB</color>
+    <color name="primary_variant">#7C4DFF</color>
+    
+    <!-- Secondary color palette - Ethereal teal -->
+    <color name="secondary">#26A69A</color>
+    <color name="secondary_dark">#00897B</color>
+    <color name="secondary_light">#80CBC4</color>
+    <color name="secondary_variant">#1DE9B6</color>
+    
+    <!-- Accent colors -->
+    <color name="accent">#FF4081</color>
+    <color name="accent_light">#FF80AB</color>
+    
+    <!-- Background colors -->
+    <color name="background_dark">#121212</color>
+    <color name="background_light">#FAFAFA</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="surface_light">#FFFFFF</color>
+    
+    <!-- Gradient colors -->
+    <color name="gradient_start">#3A1C71</color>
+    <color name="gradient_center">#5E35B1</color>
+    <color name="gradient_end">#7C4DFF</color>
+    
+    <!-- Dream theme colors -->
+    <color name="deep_space">#0F0A1F</color>
+    <color name="midnight_blue">#1C1A33</color>
+    <color name="dark_purple">#2D1F64</color>
+    <color name="cosmic_purple">#5E35B1</color>
+    <color name="twilight_violet">#7C4DFF</color>
     <color name="twilight_purple">#5C3C92</color>
-    <color name="cosmic_indigo">#3C0F6A</color>
-    <color name="stardust_violet">#9B72CF</color>
-    <color name="starlight_silver">#C1BED1</color>
-    <color name="moonlight_blue">#ACBAD1</color>
+    <color name="stardust_violet">#9E7EFF</color>
+    <color name="nebula_blue">#1E1E3F</color>
+    <color name="dream_blue">#7986CB</color>
+    <color name="dream_pink">#EC407A</color>
     
-    <!-- App Theme Colors -->
-    <color name="primary">#472D96</color>
-    <color name="primary_dark">#1A1A2E</color>
-    <color name="primary_light">#5C3C92</color>
-    <color name="accent">#9B72CF</color>
-    
-    <!-- Text and Input Colors -->
-    <color name="text_light">#E0E0E0</color>
-    <color name="text_secondary">#C1BED1</color>
-    <color name="hint_text">#9090A0</color>
-    <color name="input_background">#2C3E68</color>
+    <!-- Text colors -->
+    <color name="text_light">#FFFFFF</color>
+    <color name="text_dark">#212121</color>
+    <color name="text_secondary">#B3FFFFFF</color>  <!-- 70% white -->
+    <color name="text_secondary_dark">#757575</color>
+    <color name="hint_text">#9E9E9E</color>
+
+    <!-- Card colors -->
+    <color name="card_background_dark">#2D2D3A</color>
+    <color name="card_background_light">#FFFFFF</color>
 </resources>

@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +29,7 @@ public class StatisticsFragment extends Fragment {
     private TextView tvAnalyzedDreams;
     private TextView tvCommonThemes;
     private TextView tvLongestStreak;
+    private Button buttonAddDream;
     private DreamViewModel viewModel;
     
     @Override
@@ -42,8 +45,12 @@ public class StatisticsFragment extends Fragment {
         tvAnalyzedDreams = view.findViewById(R.id.textViewAnalyzedDreams);
         tvCommonThemes = view.findViewById(R.id.textViewCommonThemes);
         tvLongestStreak = view.findViewById(R.id.textViewLongestStreak);
+        buttonAddDream = view.findViewById(R.id.buttonAddDream);
         
         viewModel = new ViewModelProvider(requireActivity()).get(DreamViewModel.class);
+        
+        // Set up Record Dream button
+        buttonAddDream.setOnClickListener(v -> navigateToAddDream());
         
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -51,12 +58,27 @@ public class StatisticsFragment extends Fragment {
         }
     }
     
+    private void navigateToAddDream() {
+        Navigation.findNavController(requireView())
+                .navigate(R.id.addDreamFragment);
+    }
+    
     private void loadUserStatistics(String userId) {
         viewModel.loadUserDreams(userId);
         
         viewModel.getDreamsList().observe(getViewLifecycleOwner(), dreams -> {
-            if (dreams != null) {
-                updateStatistics(dreams);
+            try {
+                if (dreams != null) {
+                    updateStatistics(dreams);
+                }
+            } catch (Exception e) {
+                // Log the error but don't crash
+                android.util.Log.e("StatisticsFragment", "Error loading statistics: " + e.getMessage());
+                // Set default values
+                tvTotalDreams.setText("0");
+                tvAnalyzedDreams.setText("0");
+                tvCommonThemes.setText("No themes yet");
+                tvLongestStreak.setText("0 days");
             }
         });
     }
@@ -67,7 +89,7 @@ public class StatisticsFragment extends Fragment {
         
         int analyzedDreams = 0;
         for (Dream dream : dreams) {
-            if (dream.hasAnalysis()) {
+            if (dream != null && dream.hasAnalysis()) {
                 analyzedDreams++;
             }
         }
@@ -83,7 +105,9 @@ public class StatisticsFragment extends Fragment {
                 break;
             }
         }
-        tvCommonThemes.setText(themesText.toString().trim());
+        
+        String themesString = themesText.toString().trim();
+        tvCommonThemes.setText(themesString.isEmpty() ? "No themes yet" : themesString);
         
         tvLongestStreak.setText(calculateLongestStreak(dreams) + " days");
     }
@@ -93,10 +117,12 @@ public class StatisticsFragment extends Fragment {
         String[] commonThemes = {"water", "flying", "falling", "chase", "family", "work", "school"};
         
         for (Dream dream : dreams) {
-            String content = dream.getContent().toLowerCase();
-            for (String theme : commonThemes) {
-                if (content.contains(theme)) {
-                    themes.put(theme, themes.getOrDefault(theme, 0) + 1);
+            if (dream != null && dream.getContent() != null) {
+                String content = dream.getContent().toLowerCase();
+                for (String theme : commonThemes) {
+                    if (content.contains(theme)) {
+                        themes.put(theme, themes.getOrDefault(theme, 0) + 1);
+                    }
                 }
             }
         }

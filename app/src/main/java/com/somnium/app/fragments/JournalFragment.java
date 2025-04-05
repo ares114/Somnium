@@ -24,8 +24,7 @@ public class JournalFragment extends Fragment {
     private RecyclerView recyclerViewDreams;
     private DreamAdapter dreamAdapter;
     private DreamViewModel dreamViewModel;
-    private View progressBar;
-    private View textViewNoDreams;
+    private View layoutEmptyState;
     private FloatingActionButton fabAddDream;
 
     public JournalFragment() {
@@ -45,9 +44,8 @@ public class JournalFragment extends Fragment {
         
         // Initialize views
         recyclerViewDreams = view.findViewById(R.id.recyclerViewDreams);
-        progressBar = view.findViewById(R.id.progressBar);
-        textViewNoDreams = view.findViewById(R.id.textViewNoDreams);
-        fabAddDream = view.findViewById(R.id.floatingActionButton);
+        layoutEmptyState = view.findViewById(R.id.layoutEmptyState);
+        fabAddDream = view.findViewById(R.id.fabAddDream);
         
         setupViewModel();
         setupRecyclerView();
@@ -63,18 +61,19 @@ public class JournalFragment extends Fragment {
         // Observe dreams LiveData
         dreamViewModel.getDreamsList().observe(getViewLifecycleOwner(), dreams -> {
             dreamAdapter.updateDreams(dreams);
-            progressBar.setVisibility(View.GONE);
             
             if (dreams.isEmpty()) {
-                textViewNoDreams.setVisibility(View.VISIBLE);
+                layoutEmptyState.setVisibility(View.VISIBLE);
+                recyclerViewDreams.setVisibility(View.GONE);
             } else {
-                textViewNoDreams.setVisibility(View.GONE);
+                layoutEmptyState.setVisibility(View.GONE);
+                recyclerViewDreams.setVisibility(View.VISIBLE);
             }
         });
         
         // Observe loading state
         dreamViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
-            progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            // Could add a loading indicator later if needed
         });
         
         // Observe errors

@@ -1,22 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Somnium" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
+        <!-- Color attributes -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/text_light</item>
+        
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnSecondary">@color/text_light</item>
+        
         <item name="colorAccent">@color/accent</item>
+        <item name="android:colorAccent">@color/accent</item>
+        
         <item name="android:colorBackground">@color/deep_space</item>
         <item name="android:windowBackground">@color/deep_space</item>
         <item name="colorSurface">@color/midnight_blue</item>
+        <item name="colorOnSurface">@color/text_light</item>
+        
+        <!-- Text appearance -->
         <item name="android:textColorPrimary">@color/text_light</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorHint">@color/hint_text</item>
-        <item name="colorOnSurface">@color/text_light</item>
+        
+        <!-- Status and navigation bar styling -->
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/deep_space</item>
+        
+        <!-- Default font family -->
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        
+        <!-- Rounded corners for elements -->
+        <item name="cornerRadius">16dp</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="Theme.Somnium" parent="Base.Theme.Somnium">
-        <!-- You can customize your theme attributes here -->
-    </style>
+    <style name="Theme.Somnium" parent="Base.Theme.Somnium" />
     
     <!-- Theme with no action bar for splash screen -->
     <style name="Theme.Somnium.NoActionBar">
@@ -30,7 +52,23 @@
         <item name="backgroundTint">@color/cosmic_purple</item>
         <item name="android:textColor">@color/text_light</item>
         <item name="cornerRadius">25dp</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="elevation">4dp</item>
+        <item name="rippleColor">@color/primary_light</item>
+    </style>
+    
+    <!-- Outlined Button style -->
+    <style name="SomniumOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/twilight_violet</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="android:textColor">@color/twilight_violet</item>
+        <item name="cornerRadius">25dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="rippleColor">@color/primary_light</item>
     </style>
     
     <!-- TextField style -->
@@ -44,5 +82,58 @@
         <item name="boxBackgroundColor">@color/nebula_blue</item>
         <item name="endIconTint">@color/stardust_violet</item>
         <item name="startIconTint">@color/stardust_violet</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+    </style>
+    
+    <!-- Card style -->
+    <style name="SomniumCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/midnight_blue</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">6dp</item>
+        <item name="contentPadding">16dp</item>
+        <item name="rippleColor">@color/primary_light</item>
+        <item name="strokeColor">@color/primary_variant</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+    
+    <!-- Title text style -->
+    <style name="SomniumTitleText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+    </style>
+    
+    <!-- Subtitle text style -->
+    <style name="SomniumSubtitleText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+    </style>
+    
+    <!-- Body text style -->
+    <style name="SomniumBodyText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="fontFamily">@font/poppins</item>
+    </style>
+    
+    <!-- Caption text style -->
+    <style name="SomniumCaptionText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="fontFamily">@font/poppins_light</item>
+    </style>
+    
+    <!-- Bottom Navigation style -->
+    <style name="SomniumBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/midnight_blue</item>
+        <item name="itemIconTint">@color/stardust_violet</item>
+        <item name="itemTextColor">@color/stardust_violet</item>
+        <item name="elevation">8dp</item>
+        <item name="itemRippleColor">@color/primary_light</item>
     </style>
 </resources>
